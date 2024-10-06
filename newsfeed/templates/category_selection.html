@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - Marketplace</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'main/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+.category {
+    display: block;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: background-color 0.2s ease;
+    text-decoration: none;
+    color: #666; /* Change font color to grey */
+}
+
+.category:hover {
+    background-color: #f7f7f7;
+    text-decoration: none;
+    color: #666; /* Keep font color grey on hover */
+}
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+}
+
+body {
+    position: relative;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    padding-bottom: 50px; /* adjust this value to match the height of your footer */
+}
+    </style>
+
+    </head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="logo">Marketplace</h1>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'newsfeed' %}"><i class="fas fa-home"></i> News Feed</a></li>
+                    <li><a href="{% url 'home' %}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+
+        </div>
+    </header>
+
+<section id="categories">
+    <div class="container">
+        <h2>Categories</h2>
+        <div class="categories-grid">
+            <a href="{% url 'electronics' %}" class="category">
+                <i class="fas fa-mobile-alt fa-2x"></i>
+                <h3>Electronics</h3>
+                <p>Latest gadgets and electronics at unbeatable prices.</p>
+            </a>
+            <a href="{% url 'fashion' %}" class="category">
+                <i class="fas fa-tshirt fa-2x"></i>
+                <h3>Fashion and Beauty</h3>
+                <p>Trendy and stylish clothing for all seasons.</p>
+            </a>
+            <a href="{% url 'garden' %}" class="category">
+                <i class="fas fa-home fa-2x"></i>
+                <h3>Home & Living</h3>
+                <p>Decor and furniture to make your house a home.</p>
+            </a>
+            <a href="{% url 'sports' %}" class="category">
+                <i class="fas fa-book fa-2x"></i>
+                <h3>Sports and Leisure</h3>
+                <p>pang sports mg insert</p>
+            </a>
+        </div>
+    </div>
+</section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2024 Marketplace. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</section>
+</html>

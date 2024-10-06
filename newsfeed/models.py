@@ -16,6 +16,8 @@ class Product(models.Model):
     location = models.CharField(max_length=255)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+    category = models.CharField(max_length=50, choices=[('Electronics', 'Electronics'), ('Fashion and Beauty', 'Fashion and Beauty'), ('Home and Garden', 'Home and Garden'), ('Sports and Leisure', 'Sports and Leisure'), ('Others', 'Others')], default='Others')
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.title

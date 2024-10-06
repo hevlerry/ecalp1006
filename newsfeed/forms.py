@@ -7,7 +7,7 @@ from .models import Rating
 class PostProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ('title', 'description', 'price', 'image', 'mobile_number', 'location')
+        fields = ('title', 'description', 'price', 'image', 'mobile_number', 'location', 'category')
 
 
 class ProfileForm(forms.ModelForm):
@@ -16,6 +16,8 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('address', 'mobile_number')
+
+
 class RatingForm(forms.ModelForm):
     class Meta:
         model = Rating

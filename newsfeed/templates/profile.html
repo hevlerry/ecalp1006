@@ -136,6 +136,50 @@
 .rating-form button[type="submit"]:hover {
   background-color: #3e8e41;
 }
+.posted-listings {
+    margin-top: 40px;
+}
+
+.listing-card {
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.listing-card h3 {
+    margin-top: 0;
+    text-align: left;
+}
+
+.listing-card p {
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.delete-listing-button {
+    margin-top: 10px;
+}
+
+.delete-button {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.delete-button:hover {
+    background-color: #c82333;
+}
+
+.delete-button i {
+    margin-right: 5px;
+}
     </style>
 </head>
 <body>
@@ -170,22 +214,27 @@
                 <p>Phone Number: {{ user.profile.mobile_number }}</p>
                 <p>Address: {{ user.profile.address }}</p>
             </div>
-            <div class="posted-listings">
-                <h2>Posted Listings:</h2>
-                <ul>
-                    {% for product in products %}
-                    <li>
-                        <h3>{{ product.title }}</h3>
-                        <p>{{ product.description }}</p>
-                        <p>Price: {{ product.price }}</p>
-                        <p>Posted at: {{ product.created_at }}</p>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
+<div class="posted-listings">
+    <h2>Posted Listings:</h2>
+    {% for product in products %}
+    <div class="listing-card">
+        <h3>{{ product.title }}</h3>
+        <p>{{ product.description }}</p>
+        <p>Price: {{ product.price }}</p>
+        <p>Posted at: {{ product.created_at }}</p>
+        {% if is_owner %}
+        <div class="delete-listing-button">
+            <form method="post" action="{% url 'delete_listing' product.pk %}">
+                {% csrf_token %}
+                <button type="submit" class="button delete-button">
+                    <i class="fas fa-trash-alt"></i> Delete Listing
+                </button>
+            </form>
         </div>
-    </section>
-
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
    <div class="ratings">
   <h2>Ratings:</h2>
   <table class="ratings-table">

@@ -12,7 +12,7 @@ def logout_view(request):
     logout(request)
     return redirect('index', logout=True)
 def newsfeed(request):
-    products = Product.objects.all().order_by('-created_at')
+    products = Product.objects.filter(is_active=True).order_by('-created_at')
     return render(request, 'newsfeed.html', {'products': products})
 
 def post_product(request):
@@ -21,6 +21,7 @@ def post_product(request):
         if form.is_valid():
             product = form.save(commit=False)
             product.user = request.user
+            product.category = request.POST['category']
             product.save()
             messages.success(request, 'Your product has been successfully listed!')
             return redirect('newsfeed')
@@ -68,10 +69,21 @@ def profile(request, pk):
         edit_form = None
         rating_form = RatingForm()
 
-    products = Product.objects.filter(user=user)
+    products = Product.objects.filter(user=user, is_active=True)
 
     return render(request, 'profile.html', {'products': products, 'edit_form': edit_form, 'rating_form': rating_form, 'user': user, 'is_owner': is_owner, 'ratings': ratings})
 
+@login_required
+def delete_listing(request, pk):
+    listing = get_object_or_404(Product, pk=pk)
+    if listing.user == request.user:
+        listing.is_active = False
+        listing.save()
+        messages.success(request, 'Listing deleted successfully!')
+        return redirect('profile', pk=request.user.pk)
+    else:
+        messages.error(request, 'You do not have permission to delete this listing.')
+        return redirect('profile', pk=request.user.pk)
 @login_required
 def edit_profile(request):
     if request.method == 'POST':
@@ -83,4 +95,26 @@ def edit_profile(request):
     else:
         form = ProfileForm(instance=request.user.profile)
     return render(request, 'edit_profile.html', {'form': form})
+
+def category_selection(request):
+    return render(request, 'category_selection.html')
+
+from django.shortcuts import render
+from .models import Product
+
+def electronics(request):
+    products = Product.objects.filter(category='Electronics')
+    return render(request, 'electronics.html', {'products': products})
+
+def fashion(request):
+    products = Product.objects.filter(category='Fashion and Beauty')
+    return render(request, 'fashion.html', {'products': products})
+
+def garden(request):
+    products = Product.objects.filter(category='Home and Garden')
+    return render(request, 'garden.html', {'products': products})
+
+def sports(request):
+    products = Product.objects.filter(category='Sports and Leisure')
+    return render(request, 'sports.html', {'products': products})
 
