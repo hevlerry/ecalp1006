@@ -46,7 +46,10 @@ def login_view(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('newsfeed')
+                if user.is_superuser or user.is_staff:
+                    return redirect('custom_admin:admin_dashboard')
+                else:
+                    return redirect('newsfeed')
             else:
                 messages.error(request, 'Incorrect username or password')
     else:

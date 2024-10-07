@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Profile - Marketplace</title>
+    <title>User Details - Admin Dashboard</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'main/styles.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -168,79 +168,13 @@
 }
 
 .button-container {
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f0f0f0;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  padding,
 }
 
-.button {
-    background-color: #4CAF50;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin: 0 10px;
-}
-
-.button:hover {
-    background-color: #3e8e41;
-}
-
-.delete-button {
-    background-color: #dc3545;
-}
-
-.delete-button:hover {
-    background-color: #c82333;
-}
-
-.edit-button {
-    background-color: #4CAF50;
-}
-
-.edit-button:hover {
-    background-color: #3e8e41;
-}
-
-.button i {
-    margin-right: 5px;
-}
-.ratings-table td {
-  vertical-align: middle;
-}
-
-.ratings-table .fa-star, .ratings-table .fa-star-o {
-  color: #ffd700;
-  font-size: 18px;
-  margin-right: 5px;
-}
-.ratings-table .fa-star:hover, .ratings-table .fa-star-o:hover {
-  color: #ffd700;
-  cursor: pointer;
-
-.report-button {
-    background-color: #dc3545;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin: 0 10px;
-}
-
-.report-button:hover {
-    background-color: #c82333;
-}
-
-.button-group {
-    margin-bottom: 20px;
-}
-    </style>
+</style>
 </head>
 <body>
     <header>
@@ -249,10 +183,7 @@
             <nav>
                 <ul>
                     <li><a href="{% url 'newsfeed' %}"><i class="fas fa-home"></i> News Feed</a></li>
-                    {% if is_owner %}
-                        <li><a href="{% url 'edit_profile' %}"><i class="fas fa-user"></i> Edit Profile</a></li>
-                    {% endif %}
-                    <li><a href="{% url 'home' %}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                    <li><a href="{% url 'home' %}" onclick="return confirm('Are you sure you want to log out?')"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                 </ul>
             </nav>
         </div>
@@ -266,7 +197,7 @@
             {% endfor %}
         {% endif %}
         <div class="container">
-            <h2>User Profile</h2>
+            <h2>User Details</h2>
             <div class="profile-info">
                 <h2>Profile Information</h2>
                 <p>Username: {{ user.username }}</p>
@@ -274,97 +205,8 @@
                 <p>Phone Number: {{ user.profile.mobile_number }}</p>
                 <p>Address: {{ user.profile.address }}</p>
             </div>
-<div class="posted-listings">
-    <h2>Posted Listings:</h2>
-    {% for product in products %}
-    <div class="listing-card">
-        <h3>{{ product.title }}</h3>
-        <p>{{ product.description }}</p>
-        <p>Price: {{ product.price }}</p>
-        <p>Posted at: {{ product.created_at }}</p>
-        {% if is_owner %}
-        <div class="button-group">
-            <div class="button-container">
-                <form method="post" action="{% url 'delete_listing' product.pk %}">
-                    {% csrf_token %}
-                    <button type="submit" class="button delete-button">
-                        <i class="fas fa-trash-alt"></i> Delete Listing
-                    </button>
-                </form>
-                <a href="{% url 'edit_listing' product.pk %}" class="button edit-button">
-                    <i class="fas fa-edit"></i> Edit Listing
-                </a>
-            </div>
-        </div>
-        {% endif %}
-    </div>
-    {% endfor %}
-</div>
-      <div class="ratings">
-      <h2>Ratings:</h2>
-      <table class="ratings-table">
-        <thead>
-          <tr>
-            <th>Rater</th>
-            <th>Rating</th>
-            <th>Comment</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for rating in ratings %}
-          <tr>
-            <td>{{ rating.user.username }}</td>
-            <td>
-              {% for i in "12345"|make_list %}
-                {% if i|add:0 <= rating.rating %}
-                  <i class="fas fa-star"></i>
-                {% else %}
-                  <i class="far fa-star"></i>
-                {% endif %}
-              {% endfor %}
-            </td>
-            <td>{{ rating.comment }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-            <div class="button-group">
-    <a href="{% url 'report_user' user.pk %}" class="button report-button">
-        <i class="fas fa-flag"></i> Report User
-    </a>
-</div>
-
-<div class="rating-form">
-<div class="rating-form">
-  {% if user.username != request.user.username %}
-  <form method="post">
-    {% csrf_token %}
-    <div class="rating">
-      <label for="rating">Rating:</label>
-      <div>
-        <i class="far fa-star" data-rating="1" title="1 star"></i>
-        <i class="far fa-star" data-rating="2" title="2 stars"></i>
-        <i class="far fa-star" data-rating="3" title="3 stars"></i>
-        <i class="far fa-star" data-rating="4" title="4 stars"></i>
-        <i class="far fa-star" data-rating="5" title="5 stars"></i>
-      </div>
-    </div>
-    <div class="comment">
-      <label for="comment">Comment:</label>
-      <textarea name="comment" placeholder="Enter your comment here..." required maxlength="200"></textarea>
-    </div>
-    <input type="hidden" id="rating" name="rating" value="0">
-    <button type="submit">Rate User</button>
-  </form>
-  {% else %}
-  <p>You cannot rate your own account.</p>
-  {% endif %}
 
 </div>
-            </div>
-        </div>
-
     <footer>
         <div class="container">
             <div class="footer-content">
@@ -377,18 +219,5 @@
             </div>
         </div>
     </footer>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-  $(document).ready(function() {
-    $('.rating i').click(function() {
-      var rating = $(this).data('rating');
-      $('#rating').val(rating);
-      $('.rating i').removeClass('fas').addClass('far');
-      for (var i = 1; i <= rating; i++) {
-        $('.rating i:nth-child(' + i + ')').removeClass('far').addClass('fas');
-      }
-    });
-  });
-</script>
 </body>
 </html>

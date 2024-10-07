@@ -3,7 +3,7 @@ from django.urls import path, re_path
 
 from Marketplace_webpage.views import home
 from newsfeed.views import newsfeed, post_product, profile, edit_profile, logout_view, delete_listing, \
-    category_selection, electronics, fashion, garden, sports, edit_listing, report_listing, report_user
+    category_selection, electronics, fashion, garden, sports, edit_listing, report_listing, report_user, search
 
 urlpatterns = [
     path('', newsfeed, name='newsfeed'),
@@ -18,6 +18,7 @@ urlpatterns = [
     path('report_listing/<pk>/', report_listing, name='report_listing'),
     path('report_user/<pk>/', report_user, name='report_user'),
     path('categories/', category_selection, name='category_selection'),
+    path('search/', search, name='search'),
     path('electronics/', electronics, name='electronics'),
     path('fashion/', fashion, name='fashion'),
     path('garden/', garden, name='garden'),

@@ -60,7 +60,9 @@ def profile(request, pk):
                 rating.rated_user = user
                 rating.save()
                 messages.success(request, 'Your review has been submitted successfully!')
-                return redirect('newsfeed')
+                # Refresh the ratings query to include the newly submitted rating
+                ratings = Rating.objects.filter(rated_user=user)
+                return render(request, 'profile.html', {'products': Product.objects.filter(user=user, is_active=True), 'edit_form': None, 'rating_form': None, 'user': user, 'is_owner': is_owner, 'ratings': ratings})
 
     if is_owner:
         edit_form = ProfileForm(instance=profile)
@@ -138,6 +140,10 @@ def report_user(request, pk):
 
 def category_selection(request):
     return render(request, 'category_selection.html')
+def search(request):
+    query = request.GET.get('q')
+    products = Product.objects.filter(title__icontains=query)
+    return render(request, 'search_results.html', {'products': products})
 
 from django.shortcuts import render
 from .models import Product
