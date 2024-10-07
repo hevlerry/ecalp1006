@@ -16,6 +16,52 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+        .report-form {
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.report-button {
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.report-button:hover {
+    background-color: #3e8e41;
+}
+.form-control {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: none;
+}
     </style>
 </head>
 <body>
@@ -26,20 +72,21 @@
             <nav>
                 <ul>
                     <li><a href="{% url 'newsfeed' %}"><i class="fas fa-home"></i> News Feed</a></li>
-                    <li><a href="{% url 'profile' request.user.pk %}"><i class="fas fa-user"></i> Profile</a></li>
+                    <li><a href="{% url 'home' %}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
 
         </div>
     </header>
-    <section id="edit-profile">
-        <div class="container">
-            <h2>Edit Profile</h2>
-            <form method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit" class="button">Save Changes</button>
-            </form>
-        </div>
-    </section>
+<section id="report-user">
+    <div class="container">
+        <h2>Report User</h2>
+        <form method="post">
+            {% csrf_token %}
+            <label for="reason">Reason for reporting:</label>
+            <textarea id="reason" name="reason" rows="5" cols="50"></textarea>
+            <button type="submit" class="button">Report</button>
+        </form>
+    </div>
+</section>
     <footer>
         <div class="container">
             <div class="footer-content">

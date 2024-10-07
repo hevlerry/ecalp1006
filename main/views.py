@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-from .forms import LoginForm, RegisterForm
+from .forms import LoginForm, RegisterForm, ContactForm
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.messages import error
@@ -58,29 +58,14 @@ def logout_view(request):
     logout(request)
     return redirect('home')
 
-
-@csrf_exempt
 def contact(request):
     if request.method == 'POST':
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        message = request.POST.get('message')
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Thank you for contacting us!')
+            return redirect('contact')
+    else:
+        form = ContactForm()
 
-        with open('contact_data.txt', 'a') as f:
-            f.write(f'Name: {name}\nEmail: {email}\nMessage: {message}\n\n')
-
-        # JavaScript alert and redirection
-        return HttpResponse("""
-            <html>
-            <head>
-                <script type="text/javascript">
-                    alert('Thank you for contacting us!');
-                    window.location.href = '/';  // Redirect to index.html or the homepage URL
-                </script>
-            </head>
-            <body>
-            </body>
-            </html>
-        """)
-
-    return render(request, 'main/index.html')
+    return render(request, 'main/contact.html', {'form': form})

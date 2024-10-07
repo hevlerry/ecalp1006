@@ -9,13 +9,33 @@ class PostProductForm(forms.ModelForm):
         model = Product
         fields = ('title', 'description', 'price', 'image', 'mobile_number', 'location', 'category')
 
+    def __init__(self, *args, **kwargs):
+        super(PostProductForm, self).__init__(*args, **kwargs)
+        self.fields['mobile_number'].widget.attrs['placeholder'] = '+63 9123456789'
+
+    def clean_mobile_number(self):
+        mobile_number = self.cleaned_data['mobile_number']
+        if len(mobile_number) != 10 or not mobile_number.isdigit():
+            raise forms.ValidationError('Invalid phone number. Please enter a 10-digit phone number.')
+        return mobile_number
+
 
 class ProfileForm(forms.ModelForm):
-    mobile_number = forms.CharField(max_length=20)
+    mobile_number = forms.CharField(max_length=10)
 
     class Meta:
         model = Profile
         fields = ('address', 'mobile_number')
+
+    def __init__(self, *args, **kwargs):
+        super(ProfileForm, self).__init__(*args, **kwargs)
+        self.fields['mobile_number'].widget.attrs['placeholder'] = '+63 9123456789'
+
+    def clean_mobile_number(self):
+        mobile_number = self.cleaned_data['mobile_number']
+        if len(mobile_number) != 10 or not mobile_number.isdigit():
+            raise forms.ValidationError('Invalid phone number. Please enter a 10-digit phone number.')
+        return mobile_number
 
 
 class RatingForm(forms.ModelForm):

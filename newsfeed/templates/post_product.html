@@ -57,9 +57,15 @@
             padding: 0;
             padding-bottom: 50px; /* Add padding to the bottom of the body */
         }
+        .error-message {
+    color: red;
+    border: 1px solid red;
+    padding: 5px;
+    background-color: #ffcccc;
+}
 
         footer {
-            background-color: #f7f7f7;
+            background-color: ;
             padding: 10px;
             text-align: center;
             width: 100%;
@@ -69,33 +75,64 @@
 <body>
     <header>
         <div class="container">
-            <h1 class="logo">Marketplace</h1>
+            <h1 class="logo">Ecalp Techmar</h1>
             <nav>
                 <ul>
-                    <li><a href="/#home"><i class="fas fa-home"></i> Home</a></li>
-                    <li><a href="/#about"><i class="fas fa-info-circle"></i> About</a></li>
-                    <li><a href="/#categories"><i class="fas fa-th"></i> Categories</a></li>
-                    <li><a href="/#contact"><i class="fas fa-envelope"></i> Contact</a></li>
+                    <li><a href="{% url 'newsfeed' %}"><i class="fas fa-home"></i> News Feed</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <section id="post-product">
-        <div class="container">
-            <h2>Post a Product Listing</h2>
-            <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit" class="button">Post</button>
-            </form>
-        </div>
-    </section>
+<section id="post-product">
+    <div class="container">
+        <h2>Post a Product Listing</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <p>
+                {{ form.title.label_tag }}<br>
+                {{ form.title }}
+            </p>
+            <p>
+                {{ form.description.label_tag }}<br>
+                {{ form.description }}
+            </p>
+            <p>
+                {{ form.price.label_tag }}<br>
+                {{ form.price }}
+            </p>
+            <p>
+                {{ form.image.label_tag }}<br>
+                {{ form.image }}
+            </p>
+             <p>
+                <label for="id_mobile_number">Mobile Number (+63)</label><br>
+                {% if form.mobile_number.errors %}
+                    <div class="error-message">
+                        {{ form.mobile_number }}
+                        <span>{{ form.mobile_number.errors }}</span>
+                    </div>
+                {% else %}
+                    {{ form.mobile_number }}
+                {% endif %}
+            </p>
+            <p>
+                {{ form.location.label_tag }}<br>
+                {{ form.location }}
+            </p>
+            <p>
+                {{ form.category.label_tag }}<br>
+                {{ form.category }}
+            </p>
+            <button type="submit" class="button">Post</button>
+        </form>
+    </div>
+</section>
 
     <footer>
         <div class="container">
             <div class="footer-content">
-                <p>&copy; 2024 Marketplace. All rights reserved.</p>
+                <p>&copy; 2024 Ecalp Techmar. All rights reserved.</p>
                 <div class="social-links">
                     <a href="#"><i class="fab fa-facebook-f"></i></a>
                     <a href="#"><i class="fab fa-twitter"></i></a>

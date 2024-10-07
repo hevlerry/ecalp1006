@@ -1,10 +1,10 @@
-from .models import Product, User
+from .models import Product, User, UserReport
 from .forms import PostProductForm
 from django.contrib import messages
 from .forms import ProfileForm
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Profile, Product
+from .models import Profile, Product, Report
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
 
@@ -95,6 +95,46 @@ def edit_profile(request):
     else:
         form = ProfileForm(instance=request.user.profile)
     return render(request, 'edit_profile.html', {'form': form})
+
+@login_required
+def edit_listing(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    if product.user == request.user:
+        if request.method == 'POST':
+            form = PostProductForm(request.POST, request.FILES, instance=product)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Listing updated successfully!')
+                return redirect('newsfeed')
+        else:
+            form = PostProductForm(instance=product)
+        return render(request, 'edit_listing.html', {'form': form})
+    else:
+        messages.error(request, 'You do not have permission to edit this listing.')
+        return redirect('newsfeed')
+
+@login_required
+def report_listing(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    if product.user == request.user:
+        messages.error(request, 'You cannot report your own listing.')
+        return redirect('newsfeed')
+    if request.method == 'POST':
+        reason = request.POST.get('reason')
+        report = Report.objects.create(product=product, user=request.user, reason=reason)
+        messages.success(request, 'Listing reported successfully!')
+        return redirect('newsfeed')
+    return render(request, 'report_listing.html')
+
+@login_required
+def report_user(request, pk):
+    user = get_object_or_404(User, pk=pk)
+    if request.method == 'POST':
+        reason = request.POST.get('reason')
+        report = UserReport.objects.create(user=user, reported_by=request.user, reason=reason)
+        messages.success(request, 'User  reported successfully!')
+        return redirect('newsfeed')
+    return render(request, 'report_user.html')
 
 def category_selection(request):
     return render(request, 'category_selection.html')

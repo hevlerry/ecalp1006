@@ -160,24 +160,54 @@
     text-align: left;
 }
 
-.delete-listing-button {
+.button-group {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
     margin-top: 10px;
 }
 
-.delete-button {
-    background-color: #dc3545;
+.button-container {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+}
+
+.button {
+    background-color: #4CAF50;
     color: #fff;
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
+    margin: 0 10px;
+}
+
+.button:hover {
+    background-color: #3e8e41;
+}
+
+.delete-button {
+    background-color: #dc3545;
 }
 
 .delete-button:hover {
     background-color: #c82333;
 }
 
-.delete-button i {
+.edit-button {
+    background-color: #4CAF50;
+}
+
+.edit-button:hover {
+    background-color: #3e8e41;
+}
+
+.button i {
     margin-right: 5px;
 }
     </style>
@@ -185,10 +215,10 @@
 <body>
     <header>
         <div class="container">
-            <h1 class="logo">Marketplace</h1>
+            <h1 class="logo">Ecalp Techmar</h1>
             <nav>
                 <ul>
-                    <li><a href="/#contact"><i class="fas fa-envelope"></i> Contact</a></li>
+                    <li><a href="{% url 'newsfeed' %}"><i class="fas fa-home"></i> News Feed</a></li>
                     {% if is_owner %}
                         <li><a href="{% url 'edit_profile' %}"><i class="fas fa-user"></i> Edit Profile</a></li>
                     {% endif %}
@@ -223,13 +253,18 @@
         <p>Price: {{ product.price }}</p>
         <p>Posted at: {{ product.created_at }}</p>
         {% if is_owner %}
-        <div class="delete-listing-button">
-            <form method="post" action="{% url 'delete_listing' product.pk %}">
-                {% csrf_token %}
-                <button type="submit" class="button delete-button">
-                    <i class="fas fa-trash-alt"></i> Delete Listing
-                </button>
-            </form>
+        <div class="button-group">
+            <div class="button-container">
+                <form method="post" action="{% url 'delete_listing' product.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" class="button delete-button">
+                        <i class="fas fa-trash-alt"></i> Delete Listing
+                    </button>
+                </form>
+                <a href="{% url 'edit_listing' product.pk %}" class="button edit-button">
+                    <i class="fas fa-edit"></i> Edit Listing
+                </a>
+            </div>
         </div>
         {% endif %}
     </div>
@@ -271,12 +306,19 @@
     {% else %}
         <p class="alert alert-info">You cannot rate yourself.</p>
     {% endif %}
+    {% if user.pk != request.user.pk %}
+        <div class="user-profile">
+            <a href="{% url 'report_user' user.pk %}" class="button report-button">
+                <i class="fas fa-flag"></i> Report User
+            </a>
+        </div>
+    {% endif %}
 {% endif %}
 
     <footer>
         <div class="container">
             <div class="footer-content">
-                <p>&copy; 2024 Marketplace. All rights reserved.</p>
+                <p>&copy; 2024 Ecalp Techmar. All rights reserved.</p>
                 <div class="social-links">
                     <a href="#"><i class="fab fa-facebook-f"></i></a>
                     <a href="#"><i class="fab fa-twitter"></i></a>

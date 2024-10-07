@@ -55,3 +55,25 @@ class Rating(models.Model):
 
     def __str__(self):
         return f'{self.user.username} rated {self.rated_user.username} {self.rating}/5'
+
+class Report(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    reason = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Listing Report'
+        verbose_name_plural = 'Listing Reports'
+
+    def __str__(self):
+        return f"{self.product.title} listing reported by {self.user.username}"
+
+class UserReport(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reported_user')
+    reported_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reporter')
+    reason = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} reported by {self.reported_by.username}"

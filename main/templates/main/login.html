@@ -7,46 +7,60 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'main/styles.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+    footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: ;
+    padding: 10px;
+    text-align: center;
+}
+    </style>
 </head>
 <body>
     <header>
         <div class="container">
-            <h1 class="logo">Marketplace</h1>
+            <h1 class="logo">Ecalp Techmar</h1>
             <nav>
                 <ul>
                     <li><a href="/#home"><i class="fas fa-home"></i> Home</a></li>
-                    <li><a href="/#about"><i class="fas fa-info-circle"></i> About</a></li>
-                    <li><a href="/#categories"><i class="fas fa-th"></i> Categories</a></li>
-                    <li><a href="/#contact"><i class="fas fa-envelope"></i> Contact</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
     <section id="login">
+    <div class="container">
         <h2>Log in</h2>
-        <form method="post" action="{% url 'login' %}">
-            {% csrf_token %}
-            {% if messages %}
-            <ul>
+        {% if messages %}
+            <ul class="messages">
                 {% for message in messages %}
-                    <li>{{ message }}</li>
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
                 {% endfor %}
             </ul>
         {% endif %}
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username"><br><br>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password"><br><br>
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required><br><br>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required><br><br>
+            </div>
             <button type="submit" class="btn">Login</button>
             <p class="centered">Don't have an account? <a href="{% url 'register' %}"><button type="button" class="btn">Register</button></a></p>
         </form>
-    </section>
+    </div>
+</section>
 
     <footer>
         <div class="container">
             <div class="footer-content">
-                <p>&copy; 2024 Marketplace. All rights reserved.</p>
+                <p>&copy; 2024 Ecalp Techmar. All rights reserved.</p>
                 <div class="social-links">
                     <a href="#"><i class="fab fa-facebook-f"></i></a>
                     <a href="#"><i class="fab fa-twitter"></i></a>
