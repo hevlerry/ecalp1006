@@ -66,21 +66,21 @@
 
         .post-button {
             position: fixed;
-            top: 20px;
+            bottom: 20px;
             right: 20px;
-            background-color: #2196F3;
+            background-color: #333;
             color: #fff;
-            padding: 10px 20px;
+            padding: 20px 40px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 24px;
             font-weight: bold;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         }
 
         .post-button:hover {
-             background-color: #1A237E;
+             background-color: #222;
         }
 
         .post-button a {
@@ -89,17 +89,22 @@
         }
 
         .post-button i {
-            margin-right: 10px;
+            margin-right: 20px;
         }
         .search-bar {
-            background-color: ;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
             padding: 10px;
+            width: 100%;
         }
 
         .search-bar form {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            width: 70%;
         }
 
         .search-bar input[type="search"] {
@@ -109,8 +114,7 @@
             border-radius: 5px;
             font-size: 16px;
         }
-
-        .search-bar button[type="submit"] {
+                .search-bar button[type="submit"] {
             background-color: #666;
             color: #fff;
             padding: 10px 20px;
@@ -124,12 +128,32 @@
             background-color: #1A237E;
         }
 
+        header {
+            background-image: url("{% static 'main/8422166.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            height: 180px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+      footer {
+            background-image: url("{% static 'main/8422166.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
     </style>
 </head>
 <body>
     <header>
     <div class="container">
-        <h1 class="logo">Marketplace</h1>
+        <h1 class="logo">Ecalp Techmar</h1>
         <nav>
             <ul>
                 <li><a href="{% url 'category_selection' %}"><i class="fas fa-th"></i> Categories</a></li>
@@ -144,16 +168,9 @@
                     <input type="search" name="q" placeholder="Search...">
                     <button type="submit"><i class="fas fa-search"></i> Search</button>
                 </form>
-    </div>
-        <button class="post-button">
-            <a href="{% url 'post_product' %}">
-                <i class="fas fa-plus-circle"></i> Post a Product
-            </a>
-        </button>
+        </div>
     </div>
 </header>
-
-
     <section id="newsfeed">
         <h2>Newsfeed</h2>
 {% if messages %}
@@ -177,13 +194,13 @@
             <p>Posted at: {{ product.created_at }}</p>
             <div class="button-group">
         <div class="button-group">
-    <div class="button-container">
-        {% if product.user != request.user %}
-            <a href="{% url 'report_listing' product.pk %}" class="button report-button">
-                <i class="fas fa-flag" style="color: grey;"></i>
-            </a>
-        {% endif %}
-    </div>
+   <div class="button-container">
+    {% if product.user != request.user %}
+        <a href="{% url 'report_listing' product.pk %}" class="button report-button" style="text-decoration: none;">
+            <i class="fas fa-flag" style="color: grey;"></i> <span style="color: grey;">Report</span>
+        </a>
+    {% endif %}
+</div>
 </div>
     </div>
         </div>
@@ -191,17 +208,19 @@
 </div>
     </section>
 
-    <footer>
+     <footer>
         <div class="container">
             <div class="footer-content">
-                <p>&copy; 2024 Ecalp Techmar. All rights reserved.</p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                </div>
+                <p style="text-align: center; width: 100%;">&copy; 2024 Ecalp Techmar. All rights reserved.</p>
             </div>
         </div>
     </footer>
+
+    <button class="post-button">
+        <a href="{% url 'post_product' %}">
+            <i class="fas fa-plus-circle"></i> Post a Product
+        </a>
+    </button>
+
 </body>
 </html>

@@ -240,23 +240,51 @@
 .button-group {
     margin-bottom: 20px;
 }
+header {
+            background-image: url("{% static 'main/8422166.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+        footer {
+            background-image: url("{% static 'main/8422166.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
     </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1 class="logo">Ecalp Techmar</h1>
-            <nav>
-                <ul>
+<header>
+    <div class="container">
+        <h1 class="logo">Ecalp Techmar</h1>
+        <nav>
+            <ul>
+                {% if not request.user.is_staff %}
                     <li><a href="{% url 'newsfeed' %}"><i class="fas fa-home"></i> News Feed</a></li>
-                    {% if is_owner %}
-                        <li><a href="{% url 'edit_profile' %}"><i class="fas fa-user"></i> Edit Profile</a></li>
-                    {% endif %}
-                    <li><a href="{% url 'home' %}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+                {% endif %}
+                {% if is_owner %}
+                    <li><a href="{% url 'edit_profile' %}"><i class="fas fa-user"></i> Edit Profile</a></li>
+                {% endif %}
+                {% if request.user.is_staff %}
+                    <li>
+                        <a href="{% url 'custom_admin:user_reports' %}"><i class="fas fa-arrow-left"></i> Reported Users</a>
+                    </li>
+                {% else %}
+
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</header>
     <section id="user-profile">
         {% if messages %}
             {% for message in messages %}
@@ -329,15 +357,16 @@
         </tbody>
       </table>
     </div>
-            <div class="button-group">
-    <a href="{% url 'report_user' user.pk %}" class="button report-button">
-        <i class="fas fa-flag"></i> Report User
-    </a>
-</div>
+{% if not request.user.is_staff and user.pk != request.user.pk %}
+    <div class="button-group">
+        <a href="{% url 'report_user' user.pk %}" class="button report-button">
+            <i class="fas fa-exclamation"></i> Report User
+        </a>
+    </div>
+{% endif %}
 
-<div class="rating-form">
-<div class="rating-form">
-  {% if user.username != request.user.username %}
+<div class="rating-form listing-card">
+  {% if not request.user.is_staff and user.username != request.user.username %}
   <form method="post">
     {% csrf_token %}
     <div class="rating">
@@ -355,11 +384,14 @@
       <textarea name="comment" placeholder="Enter your comment here..." required maxlength="200"></textarea>
     </div>
     <input type="hidden" id="rating" name="rating" value="0">
-    <button type="submit">Rate User</button>
+    <button type="submit" class="rating-button">
+    <i class="fas fa-star"></i> Rate
+    </button>
   </form>
   {% else %}
-  <p>You cannot rate your own account.</p>
+  <p>Thank you for using Ecalp Techmar</p>
   {% endif %}
+</div>
 
 </div>
             </div>
@@ -368,12 +400,7 @@
     <footer>
         <div class="container">
             <div class="footer-content">
-                <p>&copy; 2024 Ecalp Techmar. All rights reserved.</p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                </div>
+                <p style="text-align: center; width: 100%;">&copy; 2024 Ecalp Techmar. All rights reserved.</p>
             </div>
         </div>
     </footer>

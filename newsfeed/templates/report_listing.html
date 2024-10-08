@@ -62,6 +62,60 @@
     border-radius: 5px;
     resize: none;
 }
+.report-button {
+    position: relative; /* add this */
+    padding-left: 25px; /* add this */
+    background-color: #dc3545; /* change the background color */
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 auto;
+    display: block;
+}
+
+.report-button:hover {
+    background-color: #c82333; /* change the hover background color */
+}
+
+.report-button i {
+    margin-right: 5px; /* add this */
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #fff;
+}
+
+header {
+            background-image: url("{% static 'main/8422166.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+        footer {
+            background-image: url("{% static 'main/8422166.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+        footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #ccc; /* change to your desired color */
+  padding: 10px;
+  text-align: center;
+}
     </style>
 </head>
 <body>
@@ -72,10 +126,6 @@
             <nav>
                 <ul>
                     <li><a href="{% url 'newsfeed' %}"><i class="fas fa-home"></i> News Feed</a></li>
-                    <li><a href="{% url 'home' %}" onclick="return confirm('Are you sure you want to log out?')">
-    <i class="fas fa-sign-out-alt"></i> Logout
-</a></li>
-
         </div>
     </header>
 <section id="report-listing">
@@ -87,19 +137,14 @@
                 <label for="reason" class="form-label">Reason for reporting:</label>
                 <textarea id="reason" name="reason" rows="5" cols="50" class="form-control"></textarea>
             </div>
-            <button type="submit" class="button report-button">Report</button>
+           <button type="submit" class="report-button">Submit</button>
         </form>
     </div>
 </section>
     <footer>
         <div class="container">
             <div class="footer-content">
-                <p>&copy; 2024 Ecalp Techmar. All rights reserved.</p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                </div>
+                <p style="text-align: center; width: 100%;">&copy; 2024 Ecalp Techmar. All rights reserved.</p>
             </div>
         </div>
     </footer>

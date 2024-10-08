@@ -1,9 +1,10 @@
+from custom_admin.views import is_staff
 from .models import Product, User, UserReport
 from .forms import PostProductForm
 from django.contrib import messages
 from .forms import ProfileForm
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import Profile, Product, Report
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
@@ -164,3 +165,8 @@ def sports(request):
     products = Product.objects.filter(category='Sports and Leisure')
     return render(request, 'sports.html', {'products': products})
 
+@login_required
+@user_passes_test(is_staff)
+def user_reports(request):
+    reports = UserReport.objects.all()
+    return render(request, 'user_reports.html', {'reports': reports})

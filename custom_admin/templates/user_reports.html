@@ -137,7 +137,6 @@
         <h1 class="logo">Ecalp Techmar</h1>
         <nav>
             <ul>
-                <li><a href="{% url 'newsfeed' %}"><i class="fas fa-home"></i> News Feed</a></li>
                 <li><a href="{% url 'home' %}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
             </ul>
         </nav>
@@ -145,13 +144,13 @@
 </header>
 
     <section id="user-reports">
-        <h2>User Reports</h2>
+        <h2>Reported Users</h2>
         <div class="reports">
             {% for report in reports %}
                 <div class="report">
-                    <h2>Reported User: {{ report.user.username }}</h2
-                      <p>Reason: {{ report.reason }}</p>
+                    <h2>    User:  <a href="{% url 'profile' report.user.pk %}">{{ report.user.username }}</a> </h2>
                     <p>Reported by: {{ report.reported_by.username }}</p>
+                    <p>Reason: {{ report.reason }}</p>
                     <p>Reported at: {{ report.created_at }}</p>
                     <div class="button-group">
                         <button class="delete-button">

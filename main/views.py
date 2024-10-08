@@ -12,17 +12,18 @@ from django.contrib.messages import error
 def home(request):
     return render(request, 'main/index.html')
 
-
 def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
-            email = form.cleaned_data['email']
             username = form.cleaned_data['username']
+            email = form.cleaned_data['email']
             password = form.cleaned_data['password']
             confirm_password = form.cleaned_data['confirm_password']
             if password == confirm_password:
-                if User.objects.filter(email=email).exists():
+                if User.objects.filter(username=username).exists():
+                    messages.error(request, 'Username is already in use!')
+                elif User.objects.filter(email=email).exists():
                     messages.error(request, 'Email address is already in use!')
                 else:
                     user = User.objects.create_user(username, email, password)
@@ -36,6 +37,27 @@ def register(request):
     else:
         form = RegisterForm()
     return render(request, 'main/register.html', {'form': form})
+
+def verify_email(request):
+    if request.method == 'POST':
+        form = VerifyEmailForm(request.POST)
+        if form.is_valid():
+            otp = form.cleaned_data['otp']
+            if otp == request.session['otp']:
+                username = request.session['username']
+                email = request.session['email']
+                password = request.session['password']
+                user = User.objects.create_user(username, email, password)
+                user.save()
+                messages.success(request, 'You have successfully registered!')
+                return redirect('login')
+            else:
+                messages.error(request, 'Invalid OTP!')
+        else:
+            messages.error(request, 'Invalid form data!')
+    else:
+        form = VerifyEmailForm()
+    return render(request, 'main/verify_email.html', {'form': form})
 
 def login_view(request):
     if request.method == 'POST':
@@ -55,7 +77,6 @@ def login_view(request):
     else:
         form = LoginForm()
     return render(request, 'main/login.html', {'form': form})
-
 
 def logout_view(request):
     logout(request)

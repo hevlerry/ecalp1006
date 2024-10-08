@@ -2,6 +2,7 @@ from .models import Product
 from .models import Profile
 from django import forms
 from .models import Rating
+from django.core.exceptions import ValidationError
 
 
 class PostProductForm(forms.ModelForm):
@@ -15,8 +16,12 @@ class PostProductForm(forms.ModelForm):
 
     def clean_mobile_number(self):
         mobile_number = self.cleaned_data['mobile_number']
-        if len(mobile_number) != 10 or not mobile_number.isdigit():
-            raise forms.ValidationError('Invalid phone number. Please enter a 10-digit phone number.')
+        if not mobile_number.isdigit():
+            raise ValidationError('Phone number must be a 10-digit number')
+        if len(mobile_number) != 10:
+            raise ValidationError('Phone number must be 10 digits long')
+        if mobile_number[0] != '9':
+            raise ValidationError('Phone number must start with 9')
         return mobile_number
 
 
@@ -33,8 +38,12 @@ class ProfileForm(forms.ModelForm):
 
     def clean_mobile_number(self):
         mobile_number = self.cleaned_data['mobile_number']
-        if len(mobile_number) != 10 or not mobile_number.isdigit():
-            raise forms.ValidationError('Invalid phone number. Please enter a 10-digit phone number.')
+        if not mobile_number.isdigit():
+            raise ValidationError('Phone number must be a 10-digit number')
+        if len(mobile_number) != 10:
+            raise ValidationError('Phone number must be 10 digits long')
+        if mobile_number[0] != '9':
+            raise ValidationError('Phone number must start with 9')
         return mobile_number
 
 

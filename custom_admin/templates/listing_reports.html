@@ -149,9 +149,9 @@
         <div class="reports">
             {% for report in reports %}
                 <div class="report">
-                    <h2>Reported Listing: {{ report.product.title }}</
-                      <p>Reason: {{ report.reason }}</p>
-                    <p>Reported by: {{ report.reported_by.username }}</p>
+                    <h2>Reported Listing: {{ report.product.title }}</>
+                    <p>Reason: {{ report.reason }}</p>
+                    <p>Reported by: {{ report.user.username }}</p>
                     <p>Reported at: {{ report.created_at }}</p>
                     <div class="button-group">
                         <button class="delete-button">

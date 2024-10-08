@@ -1,7 +1,6 @@
-
 from django.urls import path, re_path
-
 from Marketplace_webpage.views import home
+from custom_admin.views import user_reports
 from newsfeed.views import newsfeed, post_product, profile, edit_profile, logout_view, delete_listing, \
     category_selection, electronics, fashion, garden, sports, edit_listing, report_listing, report_user, search
 
@@ -23,4 +22,5 @@ urlpatterns = [
     path('fashion/', fashion, name='fashion'),
     path('garden/', garden, name='garden'),
     path('sports/', sports, name='sports'),
+    path('user_reports/', user_reports, name='user_reports'),
 ]
