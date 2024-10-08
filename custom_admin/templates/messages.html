@@ -116,18 +116,63 @@
             background-color: #1A237E;
         }
 
-        .delete-button {
-            background-color: #e74c3c;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
+       .new-delete-button {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
 
-        .delete-button:hover {
-            background-color: #c0392b;
+.new-delete-button a {
+    color: #fff;
+    text-decoration: none;
+}
+.message p b {
+    font-weight: bold;
+}
+.message {
+    margin: 20px auto;
+    width: 80%; /* Adjusted width to 80% */
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.messages {
+    text-align: center;
+}
+.message {
+    padding: 2%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 2%;
+    width: 40%; /* Adjusted width to 40% */
+    margin: 2% auto; /* Added margin to center the alert box */
+}
+        header {
+            background-image: url("{% static 'main/8422166.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+      footer {
+            background-image: url("{% static 'main/8422166.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
         }
     </style>
 </head>
@@ -137,42 +182,36 @@
         <h1 class="logo">Ecalp Techmar</h1>
         <nav>
             <ul>
-                <li><a href="{% url 'newsfeed' %}"><i class="fas fa-home"></i> News Feed</a></li>
-                <li><a href="{% url 'home' %}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                  <li><a href="{% url 'home' %}" onclick="return confirm('Are you sure you want to log out?')"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
             </ul>
         </nav>
     </div>
 </header>
 
-    <section id="messages">
-        <h2>Messages</h2>
-        <div class="messages">
-            {% for message in messages %}
-                <div class="message">
-                    <h2>Name: {{ message.name }}</h2>
-                    <p>Email: {{ message.email }}</p>
-                    <p>Message: {{ message.message }}</p>
-                    <div class="button-group">
-                        <button class="delete-button">
-                            <a href="{% url 'custom_admin:delete_message' message.pk %}">
-                                <i class="fas fa-trash-alt"></i> Delete
-                            </a>
-                        </button>
-                    </div>
+   <section id="messages">
+    <h2>Messages</h2>
+    <div class="messages">
+        {% for message in messages %}
+            <div class="message">
+                <h2>Name: {{ message.name }}</h2>
+                <p><b>Email:</b> {{ message.email }}</p>
+                <p><b>Message:</b> {{ message.message }}</p>
+                <div class="button-group">
+                    <button class="new-delete-button">
+                        <a href="{% url 'custom_admin:delete_message' message.pk %}">
+                            Delete
+                        </a>
+                    </button>
                 </div>
-            {% endfor %}
-        </div>
-    </section>
+            </div>
+        {% endfor %}
+    </div>
+</section>
 
     <footer>
         <div class="container">
             <div class="footer-content">
-                <p>&copy; 2024 Ecalp Techmar. All rights reserved.</p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                </div>
+                <p style="text-align: center; width: 100%;">&copy; 2024 Ecalp Techmar. All rights reserved.</p>
             </div>
         </div>
     </footer>

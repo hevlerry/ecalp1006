@@ -116,18 +116,94 @@
             background-color: #1A237E;
         }
 
-        .delete-button {
-            background-color: #e74c3c;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
+        .delete-button-container {
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
 
-        .delete-button:hover {
-            background-color: #c0392b;
+.new-delete-button {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.new-delete-button a {
+    color: #fff;
+    text-decoration: none;
+}
+.report h2 a {
+    color: gray;
+}
+.reports {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.report {
+    margin: 20px;
+    width: 40%; /* Adjusted width to 40% */
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+ header {
+            background-image: url("{% static 'main/8422166.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+      footer {
+            background-image: url("{% static 'main/8422166.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+      footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #ccc; /* change to your desired color */
+  padding: 10px;
+  text-align: center;
+}
+      header {
+            background-image: url("{% static 'main/8422166.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+        footer {
+            background-image: url("{% static 'main/8422166.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
         }
     </style>
 </head>
@@ -137,42 +213,39 @@
         <h1 class="logo">Ecalp Techmar</h1>
         <nav>
             <ul>
-                <li><a href="{% url 'home' %}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                 <li><a href="{% url 'home' %}" onclick="return confirm('Are you sure you want to log out?')"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
             </ul>
         </nav>
     </div>
 </header>
 
     <section id="user-reports">
-        <h2>Reported Users</h2>
-        <div class="reports">
-            {% for report in reports %}
-                <div class="report">
-                    <h2>    User:  <a href="{% url 'profile' report.user.pk %}">{{ report.user.username }}</a> </h2>
-                    <p>Reported by: {{ report.reported_by.username }}</p>
-                    <p>Reason: {{ report.reason }}</p>
-                    <p>Reported at: {{ report.created_at }}</p>
-                    <div class="button-group">
-                        <button class="delete-button">
-                            <a href="{% url 'custom_admin:delete_user_report' report.pk %}">
-                                <i class="fas fa-trash-alt"></i> Delete
-                            </a>
-                        </button>
-                    </div>
+    <h2>Reported Users</h2>
+    <div class="reports">
+        {% for report in reports %}
+            <div class="report">
+                <h2>User: <a href="{% url 'profile' report.user.pk %}">{{ report.user.username }}</a></h2>
+                <div class="report-details">
+                    <p><strong>Reported by:</strong> {{ report.reported_by.username }}</p>
+                    <p><strong>Reason:</strong> {{ report.reason }}</p>
+                    <p><strong>Reported at:</strong> {{ report.created_at }}</p>
                 </div>
-            {% endfor %}
-        </div>
-    </section>
+                <div class="button-group">
+                    <button class="new-delete-button">
+                        <a href="{% url 'custom_admin:delete_user_report' report.pk %}">
+                            Delete
+                        </a>
+                    </button>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</section>
 
-    <footer>
+     <footer>
         <div class="container">
             <div class="footer-content">
-                <p>&copy; 2024 Ecalp Techmar. All rights reserved.</p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                </div>
+                <p style="text-align: center; width: 100%;">&copy; 2024 Ecalp Techmar. All rights reserved.</p>
             </div>
         </div>
     </footer>

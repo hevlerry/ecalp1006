@@ -119,6 +119,10 @@
   padding: 10px;
   text-align: center;
 }
+              .no-results {
+            text-align: center;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -164,6 +168,8 @@
                 <p>Posted by: <a href="{% url 'profile' product.user.pk %}">{{ product.user.username }}</a></p>
                 <p>Posted at: {{ product.created_at }}</p>
             </div>
+        {% empty %}
+            <p class="no-results">No listings posted in this category as of the moment.</p>
         {% endfor %}
     </div>
 </section>

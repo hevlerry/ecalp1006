@@ -137,6 +137,34 @@
         .delete-button:hover {
             background-color: #c0392b;
         }
+        header {
+            background-image: url("{% static 'main/8422166.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+        footer {
+            background-image: url("{% static 'main/8422166.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+        footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #ccc; /* change to your desired color */
+  padding: 10px;
+  text-align: center;
+}
     </style>
 </head>
 <body>
@@ -145,7 +173,7 @@
         <h1 class="logo">Ecalp Techmar</h1>
         <nav>
             <ul>
-                <li><a href="{% url 'home' %}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                  <li><a href="{% url 'home' %}" onclick="return confirm('Are you sure you want to log out?')"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
             </ul>
         </nav>
     </div>
@@ -168,7 +196,7 @@
                     <div class="button-group">
                         <button class="delete-button">
                             <a href="{% url 'custom_admin:delete_product' product.pk %}">
-                                <i class="fas fa-trash-alt"></i> Delete
+                                <i class="fas fa-trash-alt" style="color: #fff;"></i>
                             </a>
                         </button>
                     </div>
@@ -177,15 +205,10 @@
         </div>
     </section>
 
-    <footer>
+     <footer>
         <div class="container">
             <div class="footer-content">
-                <p>&copy; 2024 Ecalp Techmar. All rights reserved.</p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                </div>
+                <p style="text-align: center; width: 100%;">&copy; 2024 Ecalp Techmar. All rights reserved.</p>
             </div>
         </div>
     </footer>

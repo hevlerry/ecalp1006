@@ -129,6 +129,53 @@
         .delete-button:hover {
             background-color: #c0392b;
         }
+        header {
+            background-image: url("{% static 'main/8422166.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+        footer {
+            background-image: url("{% static 'main/8422166.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+        .button-group {
+    text-align: center;
+}
+
+.delete-button-container {
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.new-delete-button {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.new-delete-button a {
+    color: #fff;
+    text-decoration: none;
+}
     </style>
 </head>
 <body>
@@ -137,7 +184,6 @@
         <h1 class="logo">Ecalp Techmar</h1>
         <nav>
             <ul>
-                <li><a href="{% url 'newsfeed' %}"><i class="fas fa-home"></i> News Feed</a></li>
                 <li><a href="{% url 'home' %}" onclick="return confirm('Are you sure you want to log out?')"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
             </ul>
         </nav>
@@ -153,7 +199,7 @@
                     {% if user.is_superuser %}
                         <div class="user">
                             <h2>{{ user.username }} ({{ user.email }})</h2>
-                            <p><a href="{% url 'custom_admin:user_details' user.pk %}">View Details</a></p>
+                            <p><a href="{% url 'custom_admin:user_details' user.pk %}" style="text-decoration: none;">View user profile</a></p>
                         </div>
                     {% endif %}
                 {% endfor %}
@@ -164,8 +210,16 @@
                     {% if not user.is_superuser %}
                         <div class="user">
                             <h2>{{ user.username }} ({{ user.email }})</h2>
-                            <p><a href="{% url 'custom_admin:user_details' user.pk %}">View Details</a></p>
-                            <p><a href="{% url 'custom_admin:delete_user' user.pk %}">Delete</a></p>
+                            <p><a href="{% url 'custom_admin:user_details' user.pk %}" style="text-decoration: none;">View Details</a></p>
+                            <div class="button-group">
+                    <div class="delete-button-container">
+                        <button class="new-delete-button">
+                            <a href="{% url 'custom_admin:delete_user' user.pk %}">
+                                Delete
+                            </a>
+                        </button>
+                    </div>
+                </div>
                         </div>
                     {% endif %}
                 {% endfor %}
@@ -173,15 +227,10 @@
         </div>
     </section>
 
-    <footer>
+     <footer>
         <div class="container">
             <div class="footer-content">
-                <p>&copy; 2024 Ecalp Techmar. All rights reserved.</p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                </div>
+                <p style="text-align: center; width: 100%;">&copy; 2024 Ecalp Techmar. All rights reserved.</p>
             </div>
         </div>
     </footer>

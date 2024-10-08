@@ -82,6 +82,56 @@ header {
             align-items: center;
             color: #fff;
         }
+        .container {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .report-form {
+        max-width: 500px;
+        margin: 20px auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .report-button {
+        position: relative; /* add this */
+        padding-left: 25px; /* add this */
+        background-color: #dc3545; /* change the background color */
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 0 auto;
+        display: block;
+    }
+
+    .report-button:hover {
+        background-color: #c82333; /* change the hover background color */
+    }
+
+    .report-button i {
+        margin-right: 5px; /* add this */
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #fff;
+    }
+    footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #ccc; /* change to your desired color */
+  padding: 10px;
+  text-align: center;
+}
     </style>
 </head>
 <body>
@@ -101,11 +151,13 @@ header {
 <section id="report-user">
     <div class="container">
         <h2>Report User</h2>
-        <form method="post">
+        <form method="post" class="report-form">
             {% csrf_token %}
-            <label for="reason">Reason for reporting:</label>
-            <textarea id="reason" name="reason" rows="5" cols="50"></textarea>
-            <button type="submit" class="button">Report</button>
+            <div class="form-group">
+                <label for="reason" class="form-label">Reason for reporting:</label>
+                <textarea id="reason" name="reason" rows="5" cols="50" class="form-control"></textarea>
+            </div>
+            <button type="submit" class="report-button">Submit</button>
         </form>
     </div>
 </section>
